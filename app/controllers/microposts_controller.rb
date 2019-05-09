@@ -5,7 +5,7 @@ class MicropostsController < ApplicationController
       flash[:success] = 'メッセージを投稿しました。'
       redirect_to root_url
     else
-      @microposts = current_user.microposts.order(id: :desc).page(params[:page])
+      @microposts = current_user.feed_microposts.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'メッセージの投稿に失敗しました。'
       render 'toppages/index'
     end
@@ -40,9 +40,5 @@ class MicropostsController < ApplicationController
     @count_microposts = user.microposts.count
   end
   
-   def show
-    @user = User.find(params[:id])
-    @microposts = @user.microposts.order(id: :desc).page(params[:page])
-    counts(@user)
-  end
+  
 end
